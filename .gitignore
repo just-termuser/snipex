@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.whl
+*.pytest_cache
+.mypy_cache/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+# Environment files
+.env
+.flaskenv
+# Sensitive data (Django specific)
+local_settings.py
+db.sqlite3
+# Static files (usually generated during deployment)
+/static/
+/media/
+
+# Django specific
+*.log
+*.pot
+
+# IDE-specific files (optional, depends on your IDE)
+.idea/  # For PyCharm
+.vscode/ # For VS Code
+*.swp
+.DS_Store # For macOS
+
+# Coverage run files
+.coverage
+.coverage.*
+
+gunicorn.ctl
+
+celerybeat-schedule-shm
+celerybeat-schedule-wal
+celerybeat-schedule
