@@ -13,21 +13,34 @@ class Category(models.Model):
         return self.name
 
 
-class Snippet(models.Model):
-    LANGUAGE_CHOICES = (
-        ("python", "Python"),
-        ("java", "Java"),
-        ("html", "HTML"),
-        ("css", "CSS"),
-        ("bash", "Bash/Shell"),
-        ("sql", "SQL"),
-    )
+class Language(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Язык программирования")
 
+    class Meta:
+        verbose_name = "Язык"
+        verbose_name_plural = "Языки"
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Имя тега")
+
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+
+    def __str__(self):
+        return self.name
+
+
+class Snippet(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Код сниппета")
     description = models.TextField(blank=True, verbose_name="Описание")
-    language = models.CharField(
-        max_length=50, choices=LANGUAGE_CHOICES, default="python", verbose_name="Язык"
+    language = models.ForeignKey(
+        Language, on_delete=models.PROTECT, related_name="snippets", verbose_name="Язык"
     )
 
     category = models.ForeignKey(
@@ -42,6 +55,9 @@ class Snippet(models.Model):
 
     is_public = models.BooleanField(default=False, verbose_name="Сделать публичным?")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    tags = models.ManyToManyField(
+        Tag, blank=True, related_name="snippets", verbose_name="Теги"
+    )
 
     class Meta:
         verbose_name = "Сниппет"
