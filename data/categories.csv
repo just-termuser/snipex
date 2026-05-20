@@ -1,0 +1,21 @@
+Id,name,icon
+1,Git & GitHub,fa-brands fa-github
+2,Python & Django,fa-brands fa-python
+3,Docker & Containers,fa-solid fa-box
+4,Linux & Terminal,fa-solid fa-terminal
+5,JavaScript / TypeScript,fa-brands fa-js
+6,HTML & CSS,fa-solid fa-code
+7,Базы данных (SQL/NoSQL),fa-solid fa-database
+8,"Сети и API (REST, Curl)",fa-solid fa-network-wired
+9,Безопасность и Ключи,fa-solid fa-key
+10,Настройки VS Code / IDE,fa-solid fa-sliders
+11,Деплой и CI/CD,fa-solid fa-cloud-arrow-up
+12,Логирование и Дебаг,fa-solid fa-bug
+13,Регулярные выражения (RegEx),fa-solid fa-asterisk
+14,Тестирование (Pytest/Unit),fa-solid fa-vial
+15,Работа со строками / Текст,fa-solid fa-font
+16,Математика и Алгоритмы,fa-solid fa-calculator
+17,Скрипты автоматизации (Bash),fa-solid fa-gear
+18,Фронтенд (Фреймворки),fa-solid fa-laptop-code
+19,Архивация и Файлы,fa-solid fa-file-zipper
+20,Полезные ссылки и Заметки,fa-solid fa-bookmark

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "snippets.apps.SnippetsConfig",
     "users.apps.UsersConfig",
+    "import_export",
 ]
 
 MIDDLEWARE = [
