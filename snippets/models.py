@@ -4,6 +4,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название категории")
+    icon = models.CharField(max_length=120, verbose_name="Ссылка на иконку", blank=True)
 
     class Meta:
         verbose_name = "Категория"
