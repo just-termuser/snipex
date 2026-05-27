@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path("category/<str:category_name>/", views.categories, name="category_filter"),
+    path("clicked", views.htmx_test),
+    path("category/<int:category_id>/", views.categories, name="category_filter"),
 ]

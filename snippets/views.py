@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-from .models import Category, Snippet
+from .models import Category, Snippet, Tag
 
 
 # Create your views here.
@@ -13,12 +14,16 @@ def home(request):
     return render(request, "snippets/home.html", context)
 
 
-def categories(request, category_name):
+def categories(request, category_id):
     context = {
         "snippets": Snippet.objects.filter(
-            is_public=True, category__name=category_name
+            is_public=True, category__id=category_id
         ),
         "categories": Category.objects.all(),
-        "current_category": category_name,
+        "current_category": Category.objects.get(id=category_id).name,
     }
     return render(request, "snippets/home.html", context)
+
+def htmx_test(request):
+    tags = Tag.objects.all()
+    return render(request, "snippets/partials/tags-list.html", {'tags': tags})

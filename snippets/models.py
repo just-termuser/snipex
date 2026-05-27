@@ -68,5 +68,3 @@ class Snippet(models.Model):
     def __str__(self):
         return self.title
 
-
-# Create your models here.

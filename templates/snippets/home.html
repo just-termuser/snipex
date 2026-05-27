@@ -1,28 +1,18 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block content %}
 <div class="categories">
     <a
         href="{% url 'home' %}"
-        {%
-        if
-        not
-        current_category
-        %}class="active"
-        {%
-        endif
-        %}
-        >All</a
-    >
+        {% if not current_category%}
+            class="active"
+        {% endif %}
+        >All</a>
     {% for category in categories %}
-    <a
-        href="{% url 'category_filter' category.name %}"
-        {%
-        if
-        current_category=""
-        ="category.name"
-        %}class="active"
-        {%
-        endif
-        %}
+    <a href="{% url 'category_filter' category.id %}"
+    {% if current_category in category.name %}
+        class="active"
+        {% endif %}
     >
         {{ category.name }}
     </a>
@@ -42,4 +32,18 @@
 </div>
 {% empty %}
 <p>No snippets found.</p>
-{% endfor %} {% endblock %}
+{% endfor %}
+
+
+<button 
+    hx-get="/clicked"
+    hx-trigger="click"
+    hx-target="#content"
+    hx-swap="innerHTML">
+    Get tags!
+</button>
+
+<div id="content">
+</div>
+
+{% endblock %}
