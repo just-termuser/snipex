@@ -11,6 +11,7 @@
     {% for category in categories %}
     <a href="{% url 'category_filter' category.id %}"
        hx-get="{% url 'category_filter' category.id %}"
+       hx-trigger="click"
        hx-target="#board"
        hx-push-url="true"
        {% if current_category == category.name %} class="active" {% endif %}>

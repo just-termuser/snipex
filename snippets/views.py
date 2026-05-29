@@ -10,7 +10,7 @@ def home(request):
         "current_category": None,
     }
     if request.headers.get('HX-Request'):
-        return render(request, "snippets/partials/snippet_board.html", context)
+        return render(request, "snippets/partials/snippets_board.html", context)
 
     return render(request, "snippets/home.html", context)
 
@@ -22,7 +22,7 @@ def categories(request, category_id):
         "current_category": Category.objects.get(id=category_id).name,
     }
     if request.headers.get('HX-Request'):
-        return render(request, "snippets/partials/snippet_board.html", context)
+        return render(request, "snippets/partials/snippets_board.html", context)
 
     return render(request, "snippets/home.html", context)
 
