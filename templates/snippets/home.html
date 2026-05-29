@@ -1,41 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="categories">
-    <a
-        href="{% url 'home' %}"
-        {% if not current_category%}
-            class="active"
-        {% endif %}
-        >All</a>
-    {% for category in categories %}
-    <a href="{% url 'category_filter' category.id %}"
-    {% if current_category in category.name %}
-        class="active"
-        {% endif %}
-    >
-        {{ category.name }}
-    </a>
-    {% endfor %}
+<div id="board">
+    {% include "snippets/partials/snippet_board.html" %}
 </div>
 
-{% for snippet in snippets %}
-<div class="snippet">
-    <h2>{{ snippet.title }}</h2>
-    <pre><code>{{ snippet.content }}</code></pre>
-    <p>{{ snippet.description }}</p>
-    <small>
-        Language: {{ snippet.language }} | Category: {{ snippet.category }} |
-        Author: {{ snippet.user.username }} | Created: {{
-        snippet.created_at|date:"d.m.Y H:i" }}
-    </small>
-</div>
-{% empty %}
-<p>No snippets found.</p>
-{% endfor %}
-
-
-<button 
+<button
     hx-get="/clicked"
     hx-trigger="click"
     hx-target="#content"
@@ -43,7 +13,5 @@
     Get tags!
 </button>
 
-<div id="content">
-</div>
-
+<div id="content"></div>
 {% endblock %}
