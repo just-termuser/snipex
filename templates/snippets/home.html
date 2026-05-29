@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="board">
+    {% include "snippets/partials/snippet_board.html" %}
+</div>
+
+<button
+    hx-get="/clicked"
+    hx-trigger="click"
+    hx-target="#content"
+    hx-swap="innerHTML">
+    Get tags!
+</button>
+
+<div id="content"></div>
+{% endblock %}
