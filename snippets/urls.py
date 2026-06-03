@@ -6,4 +6,5 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("clicked", views.htmx_test),
     path("category/<int:category_id>/", views.categories, name="category_filter"),
+    path("add/", views.add_snippet, name="add_snippet"),
 ]
