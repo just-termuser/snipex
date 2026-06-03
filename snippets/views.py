@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
-from .models import Category, Snippet, Tag
+from django.contrib.auth.decorators import login_required
+from .models import Category, Snippet, Tag, Language
 
 def home(request):
     context = {
@@ -29,3 +29,37 @@ def categories(request, category_id):
 def htmx_test(request):
     tags = Tag.objects.all()
     return render(request, "snippets/partials/tags-list.html", {'tags': tags})
+
+
+@login_required
+def add_snippet(request):
+    context = {
+        "categories": Category.objects.all(),
+        "languages": Language.objects.all(),
+    }
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        category_id = request.POST.get("category")
+        language_id = request.POST.get("language")
+        is_public = request.POST.get("isPublic") == "on"
+        tags_string = request.POST.get("tags", "")
+        new_snippet = Snippet.objects.create(
+            title=title,
+            content=content,
+            category_id=category_id,
+            language_id=language_id,
+            is_public=is_public,
+            user=request.user
+        )
+        if tags_string:
+            tag_names = tags_string.split(',')
+            for name in tag_names:
+                name = name.strip()
+                if name:
+                    tag_obj, created = Tag.objects.get_or_create(name=name)
+                    # привязка тега к сниппету
+                    new_snippet.tags.add(tag_obj)
+        return redirect("home")
+
+    return render(request, "snippets/add_snippet.html", context)
