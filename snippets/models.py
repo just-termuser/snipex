@@ -59,6 +59,8 @@ class Snippet(models.Model):
     tags = models.ManyToManyField(
         Tag, blank=True, related_name="snippets", verbose_name="Теги"
     )
+    favorites = models.ManyToManyField(User, related_name='favorite_snippets', blank=True, verbose_name="В избранном у")
+
 
     class Meta:
         verbose_name = "Сниппет"
@@ -67,4 +69,3 @@ class Snippet(models.Model):
 
     def __str__(self):
         return self.title
-

@@ -29,6 +29,7 @@
         Language: {{ snippet.language }} | Category: {{ snippet.category }} |
         Author: {{ snippet.user.username }} | Created: {{ snippet.created_at|date:"d.m.Y H:i" }}
     </small>
+    {% include "snippets/partials/toggle_button.html" %}
 </div>
 {% empty %}
 <p>No snippets found.</p>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="favorites">
+    <h2>My Favorites</h2>
+
+    {% for snippet in snippets %}
+    <div class="snippet">
+        <h2>{{ snippet.title }}</h2>
+        <pre><code>{{ snippet.content }}</code></pre>
+        <p>{{ snippet.description }}</p>
+        <small>
+            Language: {{ snippet.language }} | Category: {{ snippet.category }} |
+            Author: {{ snippet.user.username }} | Created: {{ snippet.created_at|date:"d.m.Y H:i" }}
+        </small>
+        {% include "snippets/partials/toggle_button.html" %}
+    </div>
+</div>
+{% empty %}
+<p>No snippets found.</p>
+{% endfor %}
+{% endblock %}

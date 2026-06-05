@@ -1,0 +1,16 @@
+{% if request.user in snippet.favorites.all %}
+<form>
+    {% csrf_token %}
+    <button hx-post="{% url 'toggle_favorite' snippet.pk %}" hx-target="this">
+        Remove from favorites
+    </button>
+</form>
+
+{% else %}
+<form>
+    {% csrf_token %}
+    <button hx-post="{% url 'toggle_favorite' snippet.pk %}" hx-target="this">
+        Add to favorites
+    </button>
+</form>
+{% endif %}

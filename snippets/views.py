@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Category, Snippet, Tag, Language
@@ -63,3 +63,21 @@ def add_snippet(request):
         return redirect("home")
 
     return render(request, "snippets/add_snippet.html", context)
+
+@login_required
+def toggle_favorite(request, snippet_id):
+    snippet = get_object_or_404(Snippet, id=snippet_id)
+
+    if request.user in snippet.favorites.all():
+        snippet.favorites.remove(request.user)
+    else:
+        snippet.favorites.add(request.user)
+
+    return render(request, "snippets/partials/toggle_button.html", {"snippet": snippet})
+
+@login_required
+def favorites(request):
+    context = {
+        "snippets": Snippet.objects.filter(favorites=request.user),
+    }
+    return render(request, "snippets/favorites.html", context)
