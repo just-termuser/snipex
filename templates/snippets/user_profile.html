@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ user_profile.username }}</h1>
+    {% for snippet in snippets %}
+        <div class="snippet">
+            <h2>{{ snippet.title }}</h2>
+            <code>{{ snippet.content }}</code>
+            <p>{{ snippet.description }}</p>
+            <small>
+                Language: {{ snippet.language }} | Category: {{ snippet.category }} |
+                Author: {{ snippet.user.username }} | Created: {{ snippet.created_at|date:"d.m.Y H:i" }}
+            </small>
+        </div>
+    {% empty %}
+        <p>This user has no snippets yet.</p>
+    {% endfor %}
+    <a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

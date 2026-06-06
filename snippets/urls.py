@@ -9,4 +9,6 @@ urlpatterns = [
     path("add/", views.add_snippet, name="add_snippet"),
     path("favorites/<int:snippet_id>/", views.toggle_favorite, name="toggle_favorite"),
     path("favorites/", views.favorites, name="favorites"),
+    path("search-users/", views.search_users, name="search_users"),
+    path("user/<str:username>/", views.user_profile, name="user_profile"),
 ]
