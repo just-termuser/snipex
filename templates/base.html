@@ -4,44 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Snipex{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
     <style>
-        body { font-family: sans-serif; margin: 20px; }
-        nav { margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-        nav a { margin-right: 15px; text-decoration: none; color: blue; }
-        .snippet { border: 1px solid #eee; padding: 10px; margin-bottom: 10px; }
-        .categories { margin-bottom: 20px; }
-        .categories a {font-size: 11px; line-height: 28px; margin-right: 10px; padding: 5px 10px; background: #f0f0f0; border-radius: 5px; text-decoration: none; color: #333; }
-        .categories a.active { background: #333; color: #fff; }
+        body { background-color: #030712; }
+        /* Strip hljs background so our pre wrapper controls it */
+        .hljs { background: transparent !important; padding: 0 !important; }
+        .django-form label { display: block; margin-bottom: 0.375rem; font-size: 0.875rem; font-weight: 500; color: #9ca3af; }
+        .django-form input[type="text"],
+        .django-form input[type="password"],
+        .django-form input[type="email"],
+        .django-form textarea,
+        .django-form select {
+            display: block; width: 100%; padding: 0.625rem 0.875rem;
+            background-color: #111827; border: 1px solid #374151; border-radius: 0.5rem;
+            color: #f9fafb; font-size: 0.875rem; outline: none; margin-bottom: 1rem;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .django-form input:focus, .django-form textarea:focus, .django-form select:focus {
+            border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+        }
+        .django-form ul { list-style: none; padding: 0; margin: 0 0 0.75rem 0; }
+        .django-form ul li { color: #f87171; font-size: 0.75rem; margin-bottom: 0.25rem; }
+        .django-form p { margin-bottom: 1.25rem; }
+        pre::-webkit-scrollbar { height: 6px; }
+        pre::-webkit-scrollbar-track { background: #030712; }
+        pre::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        // Re-run after every HTMX content swap (category filter, search, etc.)
+        document.addEventListener('htmx:afterSwap', function (e) {
+            e.detail.elt.querySelectorAll('pre code').forEach(function (el) {
+                hljs.highlightElement(el);
+            });
+        });
+    </script>
 </head>
-<body>
-    <nav>
-        <a href="{% url 'home' %}">Home</a>
-        {% if user.is_authenticated %}
-            <span>Hello, {{ user.username }}!</span>
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-            <a href="{% url 'add_snippet' %}">Add Snippet</a>
-            <a href="{% url 'favorites' %}">Favorites</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Sign Up</a>
-        {% endif %}
+<body class="text-gray-100 min-h-screen">
+
+    <nav class="sticky top-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800/60">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="{% url 'home' %}" class="flex items-center gap-2 font-mono font-semibold text-lg text-indigo-400 hover:text-indigo-300 transition-colors">
+                <span class="text-indigo-500 font-bold">&lt;/&gt;</span> Snipex
+            </a>
+            <div class="flex items-center gap-3">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_snippet' %}" class="px-3 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors font-medium">
+                        + Snippet
+                    </a>
+                    <a href="{% url 'favorites' %}" class="text-sm text-gray-400 hover:text-gray-200 transition-colors">Favorites</a>
+                    <span class="text-sm text-gray-600 font-mono">{{ user.username }}</span>
+                    <form action="{% url 'logout' %}" method="post" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-sm text-gray-500 hover:text-gray-300 transition-colors">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-sm text-gray-400 hover:text-gray-200 transition-colors">Login</a>
+                    <a href="{% url 'signup' %}" class="px-3 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors font-medium">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
     </nav>
 
     {% if messages %}
-        <div>
+        <div class="max-w-5xl mx-auto px-4 pt-4">
             {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
+                <div class="mb-2 px-4 py-3 rounded-lg text-sm
+                    {% if 'success' in message.tags %}bg-emerald-950 border border-emerald-800 text-emerald-300
+                    {% elif 'error' in message.tags %}bg-red-950 border border-red-800 text-red-300
+                    {% else %}bg-indigo-950 border border-indigo-800 text-indigo-300{% endif %}">
+                    {{ message }}
+                </div>
             {% endfor %}
         </div>
     {% endif %}
 
-    <main>
+    <main class="max-w-5xl mx-auto px-4 py-8">
         {% block content %}{% endblock %}
     </main>
+
 </body>
 </html>

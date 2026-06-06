@@ -3,11 +3,27 @@
 {% block title %}Sign Up - Snipex{% endblock %}
 
 {% block content %}
-<h2>Sign Up</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
-<p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+<div class="flex justify-center pt-10">
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-8">
+            <span class="text-3xl text-indigo-500 font-mono font-bold">&lt;/&gt;</span>
+            <h1 class="mt-3 text-2xl font-bold text-gray-100">Create account</h1>
+            <p class="mt-1 text-sm text-gray-600">Start saving your code snippets</p>
+        </div>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+            <form method="post" class="django-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit"
+                    class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-lg transition-colors mt-1">
+                    Sign Up
+                </button>
+            </form>
+            <p class="mt-5 text-center text-sm text-gray-600">
+                Already have an account?
+                <a href="{% url 'login' %}" class="text-indigo-400 hover:text-indigo-300 transition-colors">Login</a>
+            </p>
+        </div>
+    </div>
+</div>
 {% endblock %}
