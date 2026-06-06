@@ -25,6 +25,7 @@
                 <button type="submit">Logout</button>
             </form>
             <a href="{% url 'add_snippet' %}">Add Snippet</a>
+            <a href="{% url 'favorites' %}">Favorites</a>
         {% else %}
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'signup' %}">Sign Up</a>

@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Category, Snippet, Tag, Language
+
+import users
+from .models import Category, Snippet, Tag, Language, User
 
 def home(request):
     context = {
@@ -63,3 +65,39 @@ def add_snippet(request):
         return redirect("home")
 
     return render(request, "snippets/add_snippet.html", context)
+
+@login_required
+def toggle_favorite(request, snippet_id):
+    snippet = get_object_or_404(Snippet, id=snippet_id)
+
+    if request.user in snippet.favorites.all():
+        snippet.favorites.remove(request.user)
+    else:
+        snippet.favorites.add(request.user)
+
+    return render(request, "snippets/partials/toggle_button.html", {"snippet": snippet})
+
+@login_required
+def favorites(request):
+    context = {
+        "snippets": Snippet.objects.filter(favorites=request.user),
+    }
+    return render(request, "snippets/favorites.html", context)
+
+def search_users(request):
+    search_text = request.GET.get("q", "")
+    if search_text:
+        users = User.objects.filter(username__icontains=search_text)[:10]
+    else:
+        users = User.objects.none()
+
+    return render(request, "snippets/partials/search_results.html", {"users": users})
+
+def user_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    snippets = Snippet.objects.filter(user=user, is_public=True)
+    context = {
+        "user_profile": user,
+        "snippets": snippets,
+    }
+    return render(request, "snippets/user_profile.html", context)

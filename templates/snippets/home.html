@@ -1,8 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="search-box" style="margin-bottom: 20px;">
+    <h3>Search Users</h3>
+    <input type="text" name="q"
+        hx-get="{% url 'search_users' %}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#search-results"
+        placeholder="Type a username...">
+
+    <div id="search-results"></div>
+</div>
 <div id="board">
     {% include "snippets/partials/snippets_board.html" %}
+
 </div>
 
 <button
