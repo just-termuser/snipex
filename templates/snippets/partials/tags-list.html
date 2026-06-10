@@ -1,5 +1,7 @@
-<ul>
+{% if tags %}
+<div class="flex flex-wrap gap-1.5">
     {% for tag in tags %}
-        <li>{{ tag.name }}</li>
+    <span class="px-2.5 py-0.5 text-xs bg-gray-900 text-gray-500 border border-gray-800 rounded-full">{{ tag.name }}</span>
     {% endfor %}
-</ul>
+</div>
+{% endif %}
