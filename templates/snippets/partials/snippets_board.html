@@ -20,34 +20,7 @@
 </div>
 
 {% for snippet in snippets %}
-<div class="bg-gray-900 border border-gray-800 rounded-xl mb-4 overflow-hidden hover:border-gray-700/80 transition-colors group">
-    <div class="px-5 py-4 border-b border-gray-800">
-        <div class="flex items-start justify-between gap-4">
-            <h2 class="text-sm font-semibold text-gray-100">{{ snippet.title }}</h2>
-            <div class="flex items-center gap-1.5 shrink-0">
-                {% if snippet.language %}
-                <span class="px-2 py-0.5 text-xs font-mono bg-indigo-950 text-indigo-400 border border-indigo-900 rounded-md">{{ snippet.language }}</span>
-                {% endif %}
-                {% if snippet.category %}
-                <span class="px-2 py-0.5 text-xs bg-gray-800 text-gray-500 rounded-md">{{ snippet.category }}</span>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <div class="px-5 py-4">
-        <pre class="text-xs font-mono bg-gray-950 rounded-lg p-4 overflow-x-auto max-h-40 leading-relaxed"><code class="language-{{ snippet.language|hljs_lang }} !text-xs">{{ snippet.content }}</code></pre>
-        {% if snippet.description %}
-        <p class="mt-3 text-xs text-gray-600">{{ snippet.description }}</p>
-        {% endif %}
-    </div>
-    <div class="px-5 py-3 border-t border-gray-800 flex items-center justify-between">
-        <div class="flex items-center gap-3 text-xs text-gray-600">
-            <span>by <a href="{% url 'user_profile' snippet.user.username %}" class="text-gray-500 hover:text-indigo-400 transition-colors">{{ snippet.user.username }}</a></span>
-            <span>{{ snippet.created_at|date:"d.m.Y H:i" }}</span>
-        </div>
-        {% include "snippets/partials/toggle_button.html" %}
-    </div>
-</div>
+{% include "snippets/partials/snippet.html" %}
 {% empty %}
 <div class="text-center py-20">
     <p class="text-gray-700 text-sm">No snippets found.</p>

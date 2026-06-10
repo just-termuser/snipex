@@ -101,3 +101,10 @@ def user_profile(request, username):
         "snippets": snippets,
     }
     return render(request, "snippets/user_profile.html", context)
+
+def snippet_detail(request, snippet_id):
+    snippet = get_object_or_404(Snippet, id=snippet_id)
+    context = {
+        "snippet": snippet,
+    }
+    return render(request, "snippets/snippet.html", context)
