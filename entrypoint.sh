@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 echo "Entrypoint script is running"
